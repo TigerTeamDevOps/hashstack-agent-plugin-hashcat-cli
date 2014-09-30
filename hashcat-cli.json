@@ -1,0 +1,127 @@
+{
+    "algorithms": [
+        {
+            "algorithm": "Django SHA1",
+            "device": "cpu",
+            "mode": "800",
+            "tasksize": 3311400000
+        },
+        {
+            "algorithm": "bcrypt, Blowfish(OpenBSD)",
+            "device": "cpu",
+            "mode": "3200",
+            "tasksize": 43800
+        },
+        {
+            "algorithm": "MD5(Sun)",
+            "device": "cpu",
+            "mode": "3300",
+            "tasksize": 45000
+        },
+        {
+            "algorithm": "md5(md5(md5($pass)))",
+            "device": "cpu",
+            "mode": "3500",
+            "tasksize": 1266000000
+        },
+        {
+            "algorithm": "md5(md5($salt).$pass)",
+            "device": "cpu",
+            "mode": "3610",
+            "tasksize": 3300000000
+        },
+        {
+            "algorithm": "md5($salt.md5($pass))",
+            "device": "cpu",
+            "mode": "3710",
+            "tasksize": 2022000000
+        },
+        {
+            "algorithm": "md5($pass.md5($salt))",
+            "device": "cpu",
+            "mode": "3720",
+            "tasksize": 4200000000
+        },
+        {
+            "algorithm": "WebEdition CMS",
+            "device": "cpu",
+            "mode": "3721",
+            "tasksize": 3300000000
+        },
+        {
+            "algorithm": "md5($salt.$pass.$salt)",
+            "device": "cpu",
+            "mode": "3810",
+            "tasksize": 3960000000
+        },
+        {
+            "algorithm": "md5(md5($pass).md5($salt))",
+            "device": "cpu",
+            "mode": "3910",
+            "tasksize": 1590000000
+        },
+        {
+            "algorithm": "md5($salt.md5($salt.$pass))",
+            "device": "cpu",
+            "mode": "4010",
+            "tasksize": 1794000000
+        },
+        {
+            "algorithm": "md5($salt.md5($pass.$salt))",
+            "device": "cpu",
+            "mode": "4110",
+            "tasksize": 1860000000
+        },
+        {
+            "algorithm": "md5($username.0.$pass)",
+            "device": "cpu",
+            "mode": "4210",
+            "tasksize": 2700000000
+        },
+        {
+            "algorithm": "md5(strtoupper(md5($pass)))",
+            "device": "cpu",
+            "mode": "4300",
+            "tasksize": 2238000000
+        },
+        {
+            "algorithm": "sha1(sha1(sha1($pass)))",
+            "device": "cpu",
+            "mode": "4600",
+            "tasksize": 1080000000
+        },
+        {
+            "algorithm": "Fortigate (FortiOS)",
+            "device": "cpu",
+            "mode": "7000",
+            "tasksize": 2862000000
+        }
+    ],
+    "attacks": [
+        {
+            "attack": "dictionary",
+            "command": "taskset -c $dev $rootdir/programs/hashcat-cli/hashcat-cli64.bin --quiet -m $mode -n 1 --potfile-disable -o $potfile -s $skip -l $limit $hashfile $wordlist"
+        },
+        {
+            "attack": "combinator",
+            "command": "$rootdir/programs/utils/combinator.bin -s $skip -l $limit $left_wordlist $right_wordlist >$fifo | taskset -c $dev $rootdir/programs/hashcat-cli/hashcat-cli64.bin --quiet -m $mode -n 1 --potfile-disable -o $potfile -s $skip -l $limit $hashfile $fifo"
+        },
+        {
+            "attack": "mask",
+            "command": "$rootdir/programs/statsprocessor/sp64.bin -s $skip -l $limit $cs1 $cs2 $cs3 $cs4 $mask >$fifo | taskset -c $dev $rootdir/programs/hashcat-cli/hashcat-cli64.bin --quiet -m $mode -n 1 --potfile-disable -o $potfile -s $skip -l $limit $hashfile $fifo"
+        },
+        {
+            "attack": "rules",
+            "command": "taskset -c $dev $rootdir/programs/hashcat-cli/hashcat-cli64.bin --quiet -m $mode -n 1 --potfile-disable -o $potfile -s $skip -l $limit $hashfile $wordlist -r $rules"
+        },
+        {
+            "attack": "hybridLeft",
+            "command": "$rootdir/programs/utils/hybrid_6.bin -s $skip -l $limit $cs1 $cs2 $cs3 $cs4 $wordlist $mask >$fifo | taskset -c $dev $rootdir/programs/hashcat-cli/hashcat-cli64.bin --quiet -m $mode -n 1 --potfile-disable -o $potfile -s $skip -l $limit $hashfile $fifo"
+        },
+        {
+            "attack": "hybridRight",
+            "command": "$rootdir/programs/utils/hybrid_7.bin -s $skip -l $limit $cs1 $cs2 $cs3 $cs4 $mask $wordlist >$fifo | taskset -c $dev $rootdir/programs/hashcat-cli/hashcat-cli64.bin --quiet -m $mode -n 1 --potfile-disable -o $potfile -s $skip -l $limit $hashfile $fifo"
+        }
+    ],
+    "is_oclHashcat": false
+}
