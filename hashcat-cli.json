@@ -1,12 +1,6 @@
 {
     "algorithms": [
         {
-            "algorithm": "Django SHA1",
-            "device": "cpu",
-            "mode": "800",
-            "tasksize": 3311400000
-        },
-        {
             "algorithm": "bcrypt, Blowfish(OpenBSD)",
             "device": "cpu",
             "mode": "3200",
@@ -31,12 +25,6 @@
             "tasksize": 3300000000
         },
         {
-            "algorithm": "md5($salt.md5($pass))",
-            "device": "cpu",
-            "mode": "3710",
-            "tasksize": 2022000000
-        },
-        {
             "algorithm": "md5($pass.md5($salt))",
             "device": "cpu",
             "mode": "3720",
@@ -47,12 +35,6 @@
             "device": "cpu",
             "mode": "3721",
             "tasksize": 3300000000
-        },
-        {
-            "algorithm": "md5($salt.$pass.$salt)",
-            "device": "cpu",
-            "mode": "3810",
-            "tasksize": 3960000000
         },
         {
             "algorithm": "md5(md5($pass).md5($salt))",
@@ -79,12 +61,6 @@
             "tasksize": 2700000000
         },
         {
-            "algorithm": "md5(strtoupper(md5($pass)))",
-            "device": "cpu",
-            "mode": "4300",
-            "tasksize": 2238000000
-        },
-        {
             "algorithm": "sha1(sha1(sha1($pass)))",
             "device": "cpu",
             "mode": "4600",
@@ -100,27 +76,27 @@
     "attacks": [
         {
             "attack": "dictionary",
-            "command": "taskset -c $dev $rootdir/programs/hashcat-cli/hashcat-cli64.bin --quiet -m $mode -n 1 --potfile-disable -o $potfile -s $skip -l $limit $hashfile $wordlist"
+            "command": "taskset -c %dev% /opt/hashstack/programs/hashcat-cli/hashcat-cli64.bin --quiet -m %mode% -n 1 --potfile-disable -o %potfile% -s %skip% -l %limit% %hashfile% %wordlist%"
         },
         {
             "attack": "combinator",
-            "command": "$rootdir/programs/utils/combinator.bin -s $skip -l $limit $left_wordlist $right_wordlist >$fifo | taskset -c $dev $rootdir/programs/hashcat-cli/hashcat-cli64.bin --quiet -m $mode -n 1 --potfile-disable -o $potfile -s $skip -l $limit $hashfile $fifo"
+            "command": "/opt/hashstack/programs/utils/combinator.bin -s %skip% -l %limit% %left_wordlist% %right_wordlist% >%fifo% | taskset -c %dev% /opt/hashstack/programs/hashcat-cli/hashcat-cli64.bin --quiet -m %mode% -n 1 --potfile-disable -o %potfile% -s %skip% -l %limit% %hashfile% %fifo%"
         },
         {
             "attack": "mask",
-            "command": "$rootdir/programs/statsprocessor/sp64.bin -s $skip -l $limit $cs1 $cs2 $cs3 $cs4 $mask >$fifo | taskset -c $dev $rootdir/programs/hashcat-cli/hashcat-cli64.bin --quiet -m $mode -n 1 --potfile-disable -o $potfile -s $skip -l $limit $hashfile $fifo"
+            "command": "taskset -c %dev% /opt/hashstack/programs/hashcat-cli/hashcat-cli64.bin --quiet -m %mode% -n 1 --potfile-disable -o %potfile% -s %skip% -l %limit% %cs1% %cs2% %cs3% %cs4% %hashfile% -a 3 %mask%"
         },
         {
             "attack": "rules",
-            "command": "taskset -c $dev $rootdir/programs/hashcat-cli/hashcat-cli64.bin --quiet -m $mode -n 1 --potfile-disable -o $potfile -s $skip -l $limit $hashfile $wordlist -r $rules"
+            "command": "taskset -c %dev% /opt/hashstack/programs/hashcat-cli/hashcat-cli64.bin --quiet -m %mode% -n 1 --potfile-disable -o %potfile% -s %skip% -l %limit% %hashfile% %wordlist% -r %rules%"
         },
         {
             "attack": "hybridLeft",
-            "command": "$rootdir/programs/utils/hybrid_6.bin -s $skip -l $limit $cs1 $cs2 $cs3 $cs4 $wordlist $mask >$fifo | taskset -c $dev $rootdir/programs/hashcat-cli/hashcat-cli64.bin --quiet -m $mode -n 1 --potfile-disable -o $potfile -s $skip -l $limit $hashfile $fifo"
+            "command": "/opt/hashstack/programs/utils/hybrid_6.bin -s %skip% -l %limit% %cs1% %cs2% %cs3% %cs4% %wordlist% %mask% >%fifo% | taskset -c %dev% /opt/hashstack/programs/hashcat-cli/hashcat-cli64.bin --quiet -m %mode% -n 1 --potfile-disable -o %potfile% -s %skip% -l %limit% %hashfile% %fifo%"
         },
         {
             "attack": "hybridRight",
-            "command": "$rootdir/programs/utils/hybrid_7.bin -s $skip -l $limit $cs1 $cs2 $cs3 $cs4 $mask $wordlist >$fifo | taskset -c $dev $rootdir/programs/hashcat-cli/hashcat-cli64.bin --quiet -m $mode -n 1 --potfile-disable -o $potfile -s $skip -l $limit $hashfile $fifo"
+            "command": "/opt/hashstack/programs/utils/hybrid_7.bin -s %skip% -l %limit% %cs1% %cs2% %cs3% %cs4% %mask% %wordlist% >%fifo% | taskset -c %dev% /opt/hashstack/programs/hashcat-cli/hashcat-cli64.bin --quiet -m %mode% -n 1 --potfile-disable -o %potfile% -s %skip% -l %limit% %hashfile% %fifo%"
         }
     ],
     "is_oclHashcat": false
