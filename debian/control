@@ -7,6 +7,6 @@ Build-Depends: p7zip-full, make
 
 Package: hashstack-agent-plugin-hashcat-cli
 Architecture: amd64
-Depends: ${shlibs:Depends}, ${misc:Depends}, hashstack-agent
+Depends: ${shlibs:Depends}, ${misc:Depends}, hashstack-agent, hashstack-agent-utils, statsprocessor
 Description: hashcat-cli agent plugin for Hashstack
  hashcat-cli agent plugin for Hashstack
