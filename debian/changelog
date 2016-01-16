@@ -1,10 +1,23 @@
+hashstack-agent-plugin-hashcat-cli (2.00-0sagitta1) trusty; urgency=medium
+
+  * Upgrade to 2.00
+  * use all cores
+
+ -- Jeremi Gosney <jgosney@sagitta.pw>  Fri, 15 Jan 2016 17:57:25 -0800
+
+hashstack-agent-plugin-hashcat-cli (0.49-2sagitta1) precise; urgency=low
+
+  * add scrypt to hashcat-cli
+
+ -- epixoip <epixoip@token>  Wed, 06 May 2015 19:59:47 -0700
+
 hashstack-agent-plugin-hashcat-cli (0.49) precise; urgency=low
 
   * upgrade to 0.49
 
  -- epixoip <epixoip@token>  Fri, 06 Feb 2015 20:14:22 -0800
 
-hashstack-agent-plugin-hashcat-cli (0.47) UNRELEASED; urgency=low
+hashstack-agent-plugin-hashcat-cli (0.47) precise; urgency=low
 
   * Initial release.
 
